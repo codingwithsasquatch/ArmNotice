@@ -142,7 +142,28 @@
                 "name": "[variables('eventGridName')]"
             }
         },
-        
+        {
+            "type": "Microsoft.EventGrid/eventSubscriptions",
+            "name": "[variables('eventGridSubscriptionName')]",
+            "apiVersion": "[providers('Microsoft.EventGrid', 'topics').apiVersions[0]]",
+            "properties": {
+                "destination": {
+                    "endpointType": "WebHook",
+                    "properties": {
+                        "endpointUrl": "[concat('https://',reference(resourceId('Microsoft.Web/sites/', variables('functionAppName'))).hostNames[0],'/api/ArmEventTrigger')]"
+                    }
+                },
+                "filter": {
+                    "subjectBeginsWith": "",
+                    "subjectEndsWith": "",
+                    "isSubjectCaseSensitive": false,
+                    "includedEventTypes": ["All"]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/sourcecontrols', variables('functionAppName'), 'web')]"
+            ]
+        }
     ],
     "outputs": {
         "eventGridUrl": {
