@@ -108,7 +108,7 @@
                         },
                         {
                             "name": "EventGridCustomTopicKey",
-                            "value": "[listKeys(variables('eventGridName'), providers('Microsoft.EventGrid', 'topics').apiVersions[0]).keys[0].value]"
+                            "value": "[listKeys(variables('eventGridName'), providers('Microsoft.EventGrid', 'topics').apiVersions[0]).key1]"
                         }
                     ]
                 }
